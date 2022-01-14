@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "RSAKeyLoader",
+    platforms: [.iOS(.v9)],
     products: [
         .library(
             name: "RSAKeyLoader",
@@ -16,5 +17,6 @@ let package = Package(
         .target(
             name: "RSAKeyLoader",
             dependencies: []),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
