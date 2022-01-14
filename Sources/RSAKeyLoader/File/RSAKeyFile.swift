@@ -26,6 +26,6 @@ struct RSAKeyFile {
         guard let url = self.url else {
             throw RSAKeyFileError.fileNotExist
         }
-        try String(contentsOf: url, encoding: .utf8)
+        return try String(contentsOf: url, encoding: .utf8)
     }
 }

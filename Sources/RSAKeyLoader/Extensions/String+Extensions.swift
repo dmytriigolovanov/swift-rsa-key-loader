@@ -10,13 +10,13 @@ import Foundation
 
 extension String {
     func rsaKeyValue(header: String, footer: String) -> String {
-        return string.replacingOccurrences(of: header,
-                                           with: "",
-                                           options: [.caseInsensitive, .regularExpression])
-                     .replacingOccurrences(of: footer,
-                                           with: "",
-                                           options: [.caseInsensitive, .regularExpression])
-                     .replacingOccurrences(of: "\n",
-                                           with: "")
+        return self.replacingOccurrences(of: header,
+                                         with: "",
+                                         options: [.caseInsensitive,  .regularExpression])
+                    .replacingOccurrences(of: footer,
+                                          with: "",
+                                          options: [.caseInsensitive, .regularExpression])
+                    .replacingOccurrences(of: "\n",
+                                          with: "")
     }
 }

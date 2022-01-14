@@ -24,10 +24,10 @@ public final class RSAKeyLoader {
     public static func loadPrivateKey(fileName: String,
                                       fileType: RSAKeyFileType,
                                       fromBundle bundle: Bundle = .main) throws -> RSAPrivateKey {
-        let string = self.load(fileName: fileName,
-                               fileType: fileType,
-                               fromBundle: bundle)
-        return RSAPrivateKey(string)
+        let string = try self.load(fileName: fileName,
+                                   fileType: fileType,
+                                   fromBundle: bundle)
+        return try RSAPrivateKey(from: string)
     }
     
     // MARK: RSA Public Key
@@ -35,9 +35,9 @@ public final class RSAKeyLoader {
     public static func loadPublicKey(fileName: String,
                                      fileType: RSAKeyFileType,
                                      fromBundle bundle: Bundle = .main) throws -> RSAPublicKey {
-        let string = self.load(fileName: fileName,
-                               fileType: fileType,
-                               fromBundle: bundle)
-        return RSAPublicKey(string)
+        let string = try self.load(fileName: fileName,
+                                   fileType: fileType,
+                                   fromBundle: bundle)
+        return try RSAPublicKey(from: string)
     }
 }
