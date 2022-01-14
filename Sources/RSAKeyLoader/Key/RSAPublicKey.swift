@@ -13,8 +13,8 @@ public enum RSAPublicKeyError: Error {
 }
 
 public struct RSAPublicKey {
-    private let header: String = "-----BEGIN RSA PRIVATE KEY-----"
-    private let footer: String = "-----END RSA PRIVATE KEY-----"
+    private let header: String = "-----BEGIN RSA PUBLIC KEY-----"
+    private let footer: String = "-----END RSA PUBLIC KEY-----"
     
     public let originalString: String
     public let value: String
