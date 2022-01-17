@@ -8,36 +8,39 @@
 
 import Foundation
 
+public enum RSAKeyLoaderError: Error {
+    case fileNotExist
+    case emptyKey
+    case invalidKey
+}
+
 public final class RSAKeyLoader {
-    private static func load(fileName name: String,
-                      fileType: RSAKeyFileType,
-                      fromBundle bundle: Bundle) throws -> String {
-        let file = RSAKeyFile(name: name,
-                              type: fileType,
-                              bundle: bundle)
+    private static func load(fileName: String,
+                             fileExtension: String,
+                             fromBundle bundle: Bundle) throws -> RSAKey {
+        guard let url = bundle.url(forResource: fileName, withExtension: fileExtension) else {
+            throw RSAKeyLoaderError.fileNotExist
+        }
         
-        return try file.load()
+        let value = try String(contentsOf: url, encoding: .utf8)
+        
+        guard value.isEmpty == false else {
+            throw RSAKeyLoaderError.emptyKey
+        }
+        
+        guard let keyType = RSAKeyType(value: value) else {
+            throw RSAKeyLoaderError.invalidKey
+        }
+        
+        return RSAKey(type: keyType, value: value)
     }
     
-    // MARK: RSA Private Key
+    // MARK: - PEM
     
-    public static func loadPrivateKey(fileName: String,
-                                      fileType: RSAKeyFileType,
-                                      fromBundle bundle: Bundle = .main) throws -> RSAPrivateKey {
-        let string = try self.load(fileName: fileName,
-                                   fileType: fileType,
-                                   fromBundle: bundle)
-        return try RSAPrivateKey(from: string)
-    }
-    
-    // MARK: RSA Public Key
-    
-    public static func loadPublicKey(fileName: String,
-                                     fileType: RSAKeyFileType,
-                                     fromBundle bundle: Bundle = .main) throws -> RSAPublicKey {
-        let string = try self.load(fileName: fileName,
-                                   fileType: fileType,
-                                   fromBundle: bundle)
-        return try RSAPublicKey(from: string)
+    public static func loadFromPEM(fileName: String,
+                                   fromBundle bundle: Bundle = .main) throws -> RSAKey {
+        return try load(fileName: fileName,
+                        fileExtension: "pem",
+                        fromBundle: bundle)
     }
 }
